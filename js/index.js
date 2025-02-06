@@ -3,11 +3,16 @@ const divInput = document.querySelector(".container-add")
 const container = document.querySelector(".container")
 const inputBtn = document.querySelector(".btn-input")
 const textInput = document.querySelector(".input-container-add")
+const divEdit = document.querySelector(".container-edit")
+const btnEdit = document.querySelector(".btn-edit")
+const btnCancel = document.querySelector(".btn-cancel")
+const inputEdit = divEdit.querySelector(".input-container-add")
 
 let counter = 0;
+let statusEditNote = null;
 
 btn.addEventListener("click", (e) => {
-    
+
     divInput.style.display = "flex"
     container.classList.add("blur")
     textInput.value = ""
@@ -21,10 +26,10 @@ inputBtn.addEventListener("click", () => {
 
     createElement(inputValue)
 
-    
+
 })
 
-function createElement (input) {
+function createElement(input) {
     counter++;
     const divAllElm = document.createElement("div")
     divAllElm.classList.add("div-note")
@@ -46,4 +51,33 @@ function createElement (input) {
     divAllElm.append(spanTitleElm, spanInput, divAllImg)
     container.appendChild(divAllElm)
 
+    imgTrash.addEventListener("click", () => {
+        divAllElm.remove()
+    })
+
+    imgPencil.addEventListener("click", () => {
+        divEdit.style.display = "flex"
+        container.classList.add("blur")
+
+        inputEdit.value = spanInput.textContent
+        statusEditNote = spanInput
+    })
 }
+
+
+btnEdit.addEventListener("click", () => {
+    if (statusEditNote) {
+        statusEditNote.textContent = inputEdit.value
+        statusEditNote = null
+    }
+
+    divEdit.style.display = "none"
+    container.classList.remove("blur")
+})
+
+
+
+btnCancel.addEventListener("click", () => {
+    divEdit.style.display = "none"
+    container.classList.remove("blur")
+})
