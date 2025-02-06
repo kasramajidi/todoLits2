@@ -9,7 +9,8 @@
 body {
     font-family: "Roboto", serif;
     display: flex;
-    height: 100vh;
+    height: auto;
+    margin-top: 200px;
     align-items: center;
     justify-content: center;
     background-color: black;
@@ -27,7 +28,6 @@ button {
     flex-direction: column;
     gap: 34px;
     z-index: -1;
-    
 }
 
 .title {
