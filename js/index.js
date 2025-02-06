@@ -11,6 +11,8 @@ const inputEdit = divEdit.querySelector(".input-container-add")
 let counter = 0;
 let statusEditNote = null;
 
+document.addEventListener("DOMContentLoaded", loadToDoList)
+
 btn.addEventListener("click", (e) => {
 
     divInput.style.display = "flex"
@@ -27,6 +29,7 @@ inputBtn.addEventListener("click", () => {
         return alert("please input the text")
     }
     createElement(inputValue)
+    saveToDoList();
 })
 
 function createElement(input) {
@@ -54,7 +57,8 @@ function createElement(input) {
 
     imgTrash.addEventListener("click", () => {
         divAllElm.remove();
-        updateNumberNotes()
+        updateNumberNotes();
+        saveToDoList();
     })
 
     imgPencil.addEventListener("click", () => {
@@ -75,6 +79,8 @@ btnEdit.addEventListener("click", () => {
 
     divEdit.style.display = "none"
     container.classList.remove("blur")
+
+    saveToDoList();
 })
 
 
@@ -94,4 +100,27 @@ function updateNumberNotes (){
         const titleNote = number.querySelector(".div-note-title")
         titleNote.textContent = `this is note ${counter}`
     })
+}
+
+
+function saveToDoList (){
+    const notes = [];
+    const divNotes = document.querySelectorAll(".div-note")
+
+    divNotes.forEach((item) => {
+        const note = item.querySelector(".div-note-title").textContent
+        const matn = item.querySelector(".maten").textContent
+        notes.push({note, matn})
+    })
+
+    localStorage.setItem("notes", JSON.stringify(notes))
+}
+
+
+function loadToDoList (){
+    const saveNots = JSON.parse(localStorage.getItem("notes")) || [];
+
+    saveNots.forEach(item => {
+        createElement(item.matn);
+    });
 }
