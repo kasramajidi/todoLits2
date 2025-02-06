@@ -23,16 +23,17 @@ inputBtn.addEventListener("click", () => {
     divInput.style.display = "none"
     container.classList.remove("blur")
     const inputValue = textInput.value
-
+    if(inputValue === ""){
+        return alert("please input the text")
+    }
     createElement(inputValue)
-
-
 })
 
 function createElement(input) {
     counter++;
     const divAllElm = document.createElement("div")
     divAllElm.classList.add("div-note")
+    divAllElm.dataset.noteId = counter
     const spanTitleElm = document.createElement("span")
     spanTitleElm.classList.add("div-note-title")
     spanTitleElm.textContent = `this is note ${counter}`
@@ -52,7 +53,8 @@ function createElement(input) {
     container.appendChild(divAllElm)
 
     imgTrash.addEventListener("click", () => {
-        divAllElm.remove()
+        divAllElm.remove();
+        updateNumberNotes()
     })
 
     imgPencil.addEventListener("click", () => {
@@ -81,3 +83,15 @@ btnCancel.addEventListener("click", () => {
     divEdit.style.display = "none"
     container.classList.remove("blur")
 })
+
+function updateNumberNotes (){
+    const divNote = document.querySelectorAll(".div-note")
+
+    counter = 0;
+
+    divNote.forEach((number) => {
+        counter++;
+        const titleNote = number.querySelector(".div-note-title")
+        titleNote.textContent = `this is note ${counter}`
+    })
+}
